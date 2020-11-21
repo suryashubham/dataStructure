@@ -80,6 +80,16 @@ def total_non_leaf_nodes(root):
         return 1 + total_non_leaf_nodes(root.left) + total_non_leaf_nodes(root.right)
     else:
         return 0
+  
+def height_of_tree(root):
+    if root is None:
+        return 0
+    if root.left == root.right is None:
+        return 0
+    if root:
+        left_ht = height_of_tree(root.left)
+        right_ht = height_of_tree(root.right)
+        return 1 + max(left_ht, right_ht)
 
 
 if __name__ == "__main__":
@@ -100,3 +110,5 @@ if __name__ == "__main__":
     print("number of full nodes:" + str(full_nodes))
     no_leaf_node = total_non_leaf_nodes(root_node)
     print("number of non-leaf nodes:" + str(no_leaf_node))
+    height = height_of_tree(root_node)
+    print("height of tree:" + str(height))
