@@ -6,6 +6,7 @@ class NewNode:
 
 arr = [1, 2, 3, 4, 5, 6]
 q = []
+dia = 0
 
 
 def create_level_order_binary_tree(i):
@@ -90,6 +91,19 @@ def height_of_tree(root):
         left_ht = height_of_tree(root.left)
         right_ht = height_of_tree(root.right)
         return 1 + max(left_ht, right_ht)
+  
+def diameter(root):
+    global dia
+    if root is None:
+        return 0
+    if root.left == root.right is None:
+        return 1
+    if root:
+        left = diameter(root.left)
+        right = diameter(root.right)
+        if left + right > dia:
+            dia = left + right
+        return left + right
 
 
 if __name__ == "__main__":
@@ -112,3 +126,5 @@ if __name__ == "__main__":
     print("number of non-leaf nodes:" + str(no_leaf_node))
     height = height_of_tree(root_node)
     print("height of tree:" + str(height))
+     d = diameter(root_node)
+    print("diameter of tree is:", dia)
