@@ -1,3 +1,4 @@
+from copy import deepcopy
 class NewNode:
     def __init__(self, data):
         self.data = data
@@ -19,14 +20,15 @@ def create_level_order_binary_tree(i):
 
 def path(root, p, temp_path):
     if root:
-        temp_path = temp_path + str(root.data)
-        temp_path = temp_path + "->"
+        # temp_path = temp_path + str(root.data)
+        # temp_path = temp_path + "->"
+        temp_path.append(root.data)
     if root is None:
         return
     if root.data == p:
         return temp_path
-    x = path(root.left, 14, temp_path)
-    y = path(root.right, 14, temp_path)
+    x = path(root.left, 14, deepcopy(temp_path))
+    y = path(root.right, 14, deepcopy(temp_path))
     if x:
         return x
     else:
@@ -35,5 +37,5 @@ def path(root, p, temp_path):
 
 if __name__ == "__main__":
     root_node = create_level_order_binary_tree(0)
-    k = path(root_node, 14, '')
+    k = path(root_node, 14, [])
     print(k)
