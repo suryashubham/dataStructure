@@ -28,12 +28,16 @@ def path(root, p, temp_path):
     if root.data == p:
         return temp_path
     x = path(root.left, 14, deepcopy(temp_path))
-    y = path(root.right, 14, deepcopy(temp_path))
-    if x:
+    if x is not None:
         return x
     else:
-        return y
-
+        return path(root.right, 14, deepcopy(temp_path))
+#     commented code below is also an alternative but the above one is the better approach
+#     y = path(root.right, 14, deepcopy(temp_path))
+#     if x:
+#         return x
+#     else:
+#         return y
 
 if __name__ == "__main__":
     root_node = create_level_order_binary_tree(0)
