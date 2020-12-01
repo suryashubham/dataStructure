@@ -1,5 +1,3 @@
-# create a level order binary tree and traverse it vertically.
-
 vertical_maximum = 0
 vertical_minimum = 0
 
@@ -10,7 +8,7 @@ class NewNode:
         self.left = self.right = None
 
 
-arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+arr = [1, 2, 3, 4, 5, 6, 7]
 q = []
 dia = 0
 
@@ -46,8 +44,32 @@ def traverse_vertically(root, val, match):
     traverse_vertically(root.right, val + 1, match)
 
 
+def calculate_vertical_sum(root, index_val, match_val, sum_val):
+    if root is None:
+        return 0
+    if root:
+        if index_val == match_val:
+            sum_val = sum_val + root.data + calculate_vertical_sum(root.left, index_val - 1, match_val, sum_val) + \
+                      calculate_vertical_sum(root.right, index_val + 1, match_val, sum_val)
+            return sum_val
+        if index_val != match_val:
+            return calculate_vertical_sum(root.left, index_val - 1, match_val, sum_val) + \
+                   calculate_vertical_sum(root.right, index_val + 1, match_val, sum_val)
+
+
+def travel_vertically():
+    for x in range(vertical_minimum, vertical_maximum + 1):
+        traverse_vertically(root_node, 0, x)
+
+
+def sum_vertically():
+    for x in range(vertical_minimum, vertical_maximum + 1):
+        print(calculate_vertical_sum(root_node, 0, x, 0), end=' ')
+
+
 if __name__ == "__main__":
     root_node = create_level_order_binary_tree(0)
     vertical_order(root_node, 0)
-    for x in range(vertical_minimum, vertical_maximum + 1):
-        traverse_vertically(root_node, 0, x)
+    travel_vertically()
+    print()
+    sum_vertically()
