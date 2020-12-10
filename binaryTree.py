@@ -105,6 +105,15 @@ def diameter(root):
             dia = left + right
         return left + right
 
+def delete_path(root, k):
+    if root is None:
+        return None
+    if root.left == root.right is None and k > 0:
+        return None
+    root.left = delete_path(root.left, k - 1)
+    root.right = delete_path(root.right, k - 1)
+    return root
+
 
 if __name__ == "__main__":
     root_node = create_level_order_binary_tree(0)
@@ -128,3 +137,5 @@ if __name__ == "__main__":
     print("height of tree:" + str(height))
      d = diameter(root_node)
     print("diameter of tree is:", dia)
+    root_node = delete_path(root_node, 3)
+    preorder(root_node)
