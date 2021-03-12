@@ -19,6 +19,14 @@ def create_linked_list(n=None):
         create_linked_list(node)
     return Head
 
+def reverse_linked_list(calling_node, head):
+    if head:
+        reverse_linked_list(head, head.link)
+        head.link = calling_node
+    else:
+        global Head
+        Head = calling_node
+    return
 
 def print_ll(head):
     if head:
@@ -28,4 +36,5 @@ def print_ll(head):
 
 
 h = create_linked_list()
-print_ll(h)
+reverse_linked_list(None, Head)
+print_ll(Head)
