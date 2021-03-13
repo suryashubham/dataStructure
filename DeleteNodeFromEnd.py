@@ -1,4 +1,4 @@
-# deleting k'th node of a LL from end.
+# deleting k'th node of a LL from end. TC---> 0(n)
 
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
