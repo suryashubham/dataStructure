@@ -2,6 +2,8 @@ NODES = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 EDGES = [('A', 'B'), ('A', 'C'), ('A', 'D'), ('C', 'E'), ('C', 'F'),
          ('B', 'E'), ('E', 'G'), ('F', 'G'), ('D', 'F')]
 
+from collections import deque
+
 
 class Graph:
     def __init__(self, nodes, edges, DIRECTED=False):
@@ -22,7 +24,21 @@ class Graph:
             self.adj_list[source].append(destination)
             if not self.is_directed:
                 self.adj_list[destination].append(source)
-        print(self.adj_list)
+
+    def bft(self, start_node):
+        visited = {v: 0 for v in self.adj_list}
+        q = deque([])
+        q.append(start_node)
+        print('Breadth First Traversal:', end=' ')
+        while q:
+            ele = q.popleft()
+            print(ele + " ", end='')
+            visited[ele] = 1
+            neighbours = self.adj_list[ele]
+            for item in neighbours:
+                if visited[item] == 0 and item not in q:
+                    q.append(item)
 
 
 demo = Graph(NODES, EDGES)
+demo.bft("C")
