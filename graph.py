@@ -2,8 +2,9 @@
 # # EDGES = [('A', 'B'), ('A', 'C'), ('A', 'D'), ('C', 'E'), ('C', 'F'),
 # #          ('B', 'E'), ('E', 'G'), ('F', 'G'), ('D', 'F')]
 # EDGES = [('A', 'B'), ('A', 'C'), ('A', 'D'), ('A', 'E'), ('A', 'F'), ('A', 'G'), ('F', 'G')]
-NODES = [0, 1, 2, 3]
-EDGES = [(0, 2), (0, 1), (1, 2), (2, 0), (2, 3), (3, 3)]
+NODES = [1, 2, 3, 4, 5, 6, 7]
+EDGES = [(1, 2), (1, 3), (1, 4), (2, 1), (2, 4), (2, 5), (3, 1), (3, 4), (3, 7), (4, 2), (4, 3), (4, 6), (4, 1), (5, 2),
+         (5, 6), (5, 7), (6, 4), (6, 5), (6, 7), (7, 3), (7, 6), (7, 5)]
 
 from collections import deque
 
@@ -18,6 +19,9 @@ class Graph:
         self.visited = {v: 0 for v in self.adj_list}
         self.construct_graph()
         self.stack = deque([])
+        self.q = deque([])
+        self.distance = {}
+        self.new_adj = {}
 
     def create_default_adj_list(self):
         vertices = self.nodes
@@ -37,12 +41,15 @@ class Graph:
         print('Breadth First Traversal:', end=' ')
         while q:
             ele = q.popleft()
-            print(ele + " ", end='')
+            self.new_adj[ele] = []
+            print(ele, end='')
             visited[ele] = 1
             neighbours = self.adj_list[ele]
             for item in neighbours:
                 if visited[item] == 0 and item not in q:
+                    self.new_adj[ele].append(item)
                     q.append(item)
+        print()
 
     def dft(self, start_node):
         # visited = {v: 0 for v in self.adj_list}
@@ -62,9 +69,25 @@ class Graph:
                 return True
         return False
 
+    def sssp(self, start_node, destination_node):
+        self.q.append(start_node)
+        self.distance[start_node] = 0
+        q = self.q
+        while q:
+            item = q.popleft()
+            self.visited[item] = 1
+            for element in self.new_adj[item]:
+                if self.visited[element] == 0:
+                    q.append(element)
+                    self.distance[element] = self.distance[item] + 1
+        print("shortest distance between {} and {} nodes is {}".format(start_node, destination_node,
+                                                                       self.distance[destination_node]))
+
 
 demo = Graph(NODES, EDGES)
 # print(demo.adj_list)
-# demo.bft("C")
+demo.bft(1)
+# print(demo.new_adj)
 # demo.dft("A")
-print((demo.detect_cycle(0, "-1")))
+# print((demo.detect_cycle(0, "-1")))
+demo.sssp(1, 7)
