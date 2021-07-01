@@ -11,6 +11,7 @@ class Graph:
     def __init__(self, nv):
         self.vertices = nv
         self.adj_matrix = [[0] * nv for _ in range(nv)]
+        self.visited = [0] * nv
 
     def add_edge(self, edge_set):
         for src, des in edge_set:
@@ -24,7 +25,7 @@ class Graph:
                 print(self.adj_matrix[i][j], end=' ')
             print()
 
-    def BFS(self, start_node):
+    def BFT(self, start_node):
         visited = [0] * self.vertices
         q = deque([start_node])
         visited[start_node] = 1
@@ -36,9 +37,18 @@ class Graph:
                 if self.adj_matrix[item][i] == 1 and visited[i] == 0:
                     q.append(i)
                     visited[i] = 1
+        print()
+
+    def DFT(self, start_node):
+        self.visited[start_node] = 1
+        print(start_node, end=' ')
+        for i in range(self.vertices):
+            if self.adj_matrix[start_node][i] == 1 and self.visited[i] == 0:
+                self.DFT(i)
 
 
-graph = Graph(len(NODES))
+graph = Graph(len(NODES)+1)
 graph.add_edge(EDGES)
 graph.print_graph()
-graph.BFS(1)
+graph.BFT(1)
+graph.DFT(1)
