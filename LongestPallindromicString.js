@@ -1,4 +1,4 @@
-const s = 'babad';
+const s = '';
 let largest_pallindrome = '';
 visited = {}
 
@@ -9,7 +9,12 @@ function _lps(input_string) {
         let p_flag = true;
 
         if (input_string.length == 0) return;
-        if (input_string.length == 1) return input_string;
+        if (input_string.length == 1) {
+            if (input_string.length > largest_pallindrome.length) {
+                largest_pallindrome = input_string;
+            }
+            return input_string;
+        }
 
         for (let i = 0, j = input_string.length - 1; i < j; i++, j--) {
             if (input_string[i] == input_string[j]) {
@@ -24,10 +29,10 @@ function _lps(input_string) {
         if (p_flag == false) {
             let s1 = _lps(input_string.slice(1))
             let s2 = _lps(input_string.slice(0, input_string.length - 1))
-            if (s1 && s1.length>largest_pallindrome.length) largest_pallindrome=s1;
-            if (s2 && s2.length>largest_pallindrome.length) largest_pallindrome=s2;
+            if (s1 && s1.length > largest_pallindrome.length) largest_pallindrome = s1;
+            if (s2 && s2.length > largest_pallindrome.length) largest_pallindrome = s2;
         }
-        return p_flag?input_string:false;
+        return p_flag ? input_string : false;
     }
 }
 
