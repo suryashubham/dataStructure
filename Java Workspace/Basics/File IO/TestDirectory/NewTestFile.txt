@@ -1,0 +1,2 @@
+Text inserted from a java program 1
+Text inserted from a java program 2
